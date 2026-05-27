@@ -6,6 +6,8 @@ numpy
 
 langchain
 langchain-community
+langchain-groq
+
 faiss-cpu
 
 openai
