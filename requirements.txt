@@ -2,3 +2,9 @@ streamlit
 pypdf
 pandas
 numpy
+python-dotenv
+streamlit
+python-dotenv
+pypdf
+langchain
+openai
