@@ -1,10 +1,11 @@
 streamlit
+python-dotenv
 pypdf
 pandas
 numpy
-python-dotenv
-streamlit
-python-dotenv
-pypdf
+
 langchain
-langchain-text-splitters
+langchain-community
+faiss-cpu
+
+openai
