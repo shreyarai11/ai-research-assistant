@@ -8,3 +8,5 @@ python-dotenv
 pypdf
 langchain
 openai
+langchain.chains
+langchain-text-splitters
