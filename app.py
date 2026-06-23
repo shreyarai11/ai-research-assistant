@@ -17,103 +17,53 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+if "uploaded_files" not in st.session_state:
+    st.session_state.uploaded_files = []
+
+if "chunks" not in st.session_state:
+    st.session_state.chunks = []
+
+if "vector_store" not in st.session_state:
+    st.session_state.vector_store = None
+
 st.markdown("""
 <style>
 
 .stApp {
-    background:
-    radial-gradient(circle at top left, #1E3A8A, transparent 30%),
-    radial-gradient(circle at bottom right, #7C3AED, transparent 30%),
-    linear-gradient(135deg, #050816, #0B1026, #111936);
-    color: white;
+background:
+radial-gradient(circle at top left,#1E3A8A,transparent 30%),
+radial-gradient(circle at bottom right,#7C3AED,transparent 30%),
+linear-gradient(135deg,#050816,#0B1026,#111936);
 }
 
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
+#MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
 
-.block-container {
-    padding-top: 2rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
+section[data-testid="stSidebar"]{
+background:rgba(10,15,35,0.95);
 }
 
-section[data-testid="stSidebar"] {
-    background: rgba(10,15,35,0.95);
-    border-right: 1px solid rgba(255,255,255,0.08);
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:20px;
+padding:20px;
+margin-bottom:15px;
 }
 
-.hero {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 30px;
-    padding: 3rem;
-    backdrop-filter: blur(16px);
-    margin-bottom: 2rem;
-    box-shadow: 0 0 40px rgba(124,58,237,0.25);
+.hero{
+background:rgba(255,255,255,0.05);
+padding:35px;
+border-radius:25px;
+margin-bottom:20px;
 }
 
-.title {
-    font-size: 4rem;
-    font-weight: 800;
-    background: linear-gradient(
-        90deg,
-        #60A5FA,
-        #A855F7,
-        #EC4899
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-    color: #CBD5E1;
-    font-size: 1.1rem;
-    margin-top: 1rem;
-}
-
-.card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 24px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    backdrop-filter: blur(10px);
-    transition: 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 30px rgba(168,85,247,0.25);
-}
-
-.upload-box {
-    background: rgba(255,255,255,0.03);
-    border: 2px dashed #8B5CF6;
-    border-radius: 30px;
-    padding: 3rem;
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.stTextInput input {
-    background-color: #111827 !important;
-    color: white !important;
-    border-radius: 12px !important;
-}
-
-.stButton>button {
-    background: linear-gradient(
-        90deg,
-        #7C3AED,
-        #9333EA
-    );
-    color: white;
-    border: none;
-    border-radius: 14px;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
+.stButton button{
+background:#7C3AED;
+color:white;
+border:none;
+border-radius:12px;
 }
 
 </style>
@@ -121,11 +71,7 @@ section[data-testid="stSidebar"] {
 
 with st.sidebar:
 
-    st.markdown("""
-    <h1 style='color:white;'>🧠 AI Research</h1>
-    """, unsafe_allow_html=True)
-
-    st.markdown("---")
+    st.title("🧠 AI Research")
 
     selected = st.radio(
         "Navigation",
@@ -138,98 +84,25 @@ with st.sidebar:
             "⚙️ Settings"
         ]
     )
-
-    st.markdown("---")
-
     st.markdown("""
-    ### 🚀 System Status
-
-    ✅ Embeddings Ready  
-    ✅ FAISS Active  
-    ✅ RAG Pipeline Online  
-    ✅ Groq Connected
-    """)
-
-    st.markdown("---")
-
-    st.markdown("""
-    ### 🛠 Tech Stack
-
-    - LangChain
-    - FAISS
-    - HuggingFace
-    - Groq LLM
-    - Streamlit
-    """)
-
-st.markdown("""
 <div class="hero">
-
-<div class="title">
-🧠 AI Research Assistant
-</div>
-
-<div class="subtitle">
-Next-generation AI platform for understanding
-research papers using Retrieval-Augmented Generation,
-semantic vector search, transformer embeddings,
-and large language models.
-</div>
-
-<br>
-
-<div style="
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-">
-
-<div style="
-background:rgba(255,255,255,0.08);
-padding:10px 18px;
-border-radius:999px;
-">
-⚡ RAG Pipeline
-</div>
-
-<div style="
-background:rgba(255,255,255,0.08);
-padding:10px 18px;
-border-radius:999px;
-">
-🔍 Semantic Search
-</div>
-
-<div style="
-background:rgba(255,255,255,0.08);
-padding:10px 18px;
-border-radius:999px;
-">
-📚 FAISS Vector DB
-</div>
-
-<div style="
-background:rgba(255,255,255,0.08);
-padding:10px 18px;
-border-radius:999px;
-">
-🤖 LLM Powered
-</div>
-
-</div>
-
+<h1>🧠 AI Research Assistant</h1>
+<p>
+Upload research papers, create embeddings,
+perform semantic search, and chat with your documents.
+</p>
 </div>
 """, unsafe_allow_html=True)
 
 uploaded_files = st.file_uploader(
-    "Upload PDFs",
+    "Upload PDF Research Papers",
     type=["pdf"],
     accept_multiple_files=True
 )
 
-chunks = []
-
 if uploaded_files:
+
+    st.session_state.uploaded_files = uploaded_files
 
     all_text = ""
 
@@ -237,16 +110,12 @@ if uploaded_files:
 
         pdf_reader = PdfReader(file)
 
-        text = ""
-
         for page in pdf_reader.pages:
 
-            extracted = page.extract_text()
+            text = page.extract_text()
 
-            if extracted:
-                text += extracted
-
-        all_text += text
+            if text:
+                all_text += text
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
@@ -255,87 +124,90 @@ if uploaded_files:
 
     chunks = splitter.split_text(all_text)
 
+    st.session_state.chunks = chunks
+
+    embedding_model = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+
+    vector_store = FAISS.from_texts(
+        chunks,
+        embedding_model
+    )
+
+    st.session_state.vector_store = vector_store
+
+uploaded_files = st.session_state.uploaded_files
+chunks = st.session_state.chunks
+
 doc_count = len(uploaded_files) if uploaded_files else 0
 chunk_count = len(chunks)
 
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.markdown(f"""
-    <div class="card">
-    <h3>📄 Documents</h3>
-    <h1>{doc_count}</h1>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric("📄 Documents", doc_count)
 
 with col2:
-    st.markdown(f"""
-    <div class="card">
-    <h3>🧠 Embeddings</h3>
-    <h1>{chunk_count}</h1>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric("🧠 Chunks", chunk_count)
 
 with col3:
-    st.markdown("""
-    <div class="card">
-    <h3>⚡ Queries</h3>
-    <h1>Live</h1>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric("⚡ Status", "Ready")
 
 with col4:
-    st.markdown("""
-    <div class="card">
-    <h3>🤖 Status</h3>
-    <h1>Ready</h1>
-    </div>
-    """, unsafe_allow_html=True)
-
-if selected == "🏠 Dashboard":
+    st.metric("🤖 AI", "Online")
+    if selected == "🏠 Dashboard":
 
     st.subheader("🏠 Dashboard")
 
     st.markdown("""
     <div class="card">
-    Welcome to your AI-powered research workspace.
-    Upload papers, perform semantic search,
-    and chat with your documents using RAG.
-    </div>
-    """, unsafe_allow_html=True)
-
-elif selected == "📄 Upload Papers":
-
-    st.subheader("📄 Upload Research Papers")
-
-    st.markdown("""
-    <div class="upload-box">
-    <h1>📤 Upload Research Papers</h1>
-
-    <p style='font-size:18px;color:#CBD5E1;'>
-    Upload PDFs and build your own intelligent AI knowledge base
+    <h3>Welcome</h3>
+    <p>
+    This AI Research Assistant helps you upload papers,
+    perform semantic search, generate embeddings,
+    and chat with research documents.
     </p>
-
     </div>
     """, unsafe_allow_html=True)
 
     if uploaded_files:
 
-        st.success(f"✅ {len(uploaded_files)} PDF(s) uploaded")
+        st.success(f"{len(uploaded_files)} document(s) loaded successfully.")
+
+        for file in uploaded_files:
+
+            st.write("📄", file.name)
+
+    else:
+
+        st.info("Upload research papers to begin.")
+
+elif selected == "📄 Upload Papers":
+
+    st.subheader("📄 Upload Papers")
+
+    if uploaded_files:
+
+        st.success(f"{len(uploaded_files)} PDF(s) uploaded")
 
         for file in uploaded_files:
 
             st.markdown(f"""
             <div class="card">
-            📄 {file.name}
+            <h4>📄 {file.name}</h4>
             </div>
             """, unsafe_allow_html=True)
+
+    else:
+
+        st.warning("No PDFs uploaded yet.")
 
 elif selected == "🔍 Semantic Search":
 
     st.subheader("🔍 Semantic Search")
 
-    if uploaded_files:
+    if chunks:
 
         st.write(f"Total Chunks Created: {len(chunks)}")
 
@@ -343,74 +215,66 @@ elif selected == "🔍 Semantic Search":
 
             st.markdown(f"""
             <div class="card">
-            <h3>Chunk {i+1}</h3>
-            <p>{chunk[:500]}...</p>
+            <h4>Chunk {i+1}</h4>
+            <p>{chunk[:400]}...</p>
             </div>
             """, unsafe_allow_html=True)
 
     else:
+
         st.info("Upload PDFs first.")
 
 elif selected == "🤖 AI Assistant":
 
     st.subheader("🤖 AI Assistant")
 
-    if uploaded_files:
+    if st.session_state.vector_store:
 
-        embedding_model = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        question = st.chat_input(
+            "Ask anything about your uploaded papers..."
         )
 
-        vector_store = FAISS.from_texts(
-            chunks,
-            embedding=embedding_model
-        )
+        if question:
 
-        query = st.text_input(
-            "Ask anything about the research paper"
-        )
+            with st.chat_message("user"):
+                st.write(question)
 
-        if query:
-
-            docs = vector_store.similarity_search(
-                query,
+            docs = st.session_state.vector_store.similarity_search(
+                question,
                 k=3
-            )
-
-            llm = ChatGroq(
-                temperature=0,
-                model_name="llama3-8b-8192",
-                groq_api_key=os.getenv("GROQ_API_KEY")
             )
 
             context = "\n\n".join(
                 [doc.page_content for doc in docs]
             )
 
+            llm = ChatGroq(
+                groq_api_key=os.getenv("GROQ_API_KEY"),
+                model_name="llama3-8b-8192",
+                temperature=0
+            )
+
             prompt = f"""
 You are an AI Research Assistant.
 
-Answer the question ONLY using the provided context.
+Use ONLY the provided context.
 
-Research Context:
+Context:
 {context}
 
 Question:
-{query}
+{question}
 
 Answer:
 """
 
-            response = llm.invoke(prompt).content
+            answer = llm.invoke(prompt).content
 
-            st.markdown(f"""
-            <div class="card">
-            <h2>🤖 AI Answer</h2>
-            <p>{response}</p>
-            </div>
-            """, unsafe_allow_html=True)
+            with st.chat_message("assistant"):
+                st.write(answer)
 
     else:
+
         st.info("Upload PDFs first.")
 
 elif selected == "📚 Vector Database":
@@ -419,31 +283,142 @@ elif selected == "📚 Vector Database":
 
     st.markdown(f"""
     <div class="card">
-    <h2>FAISS Vector Store</h2>
-
-    <p>Total Document Chunks: {chunk_count}</p>
-
+    <h3>FAISS Vector Store</h3>
+    <p>Total Chunks: {chunk_count}</p>
     <p>Embedding Model:</p>
-
     <code>sentence-transformers/all-MiniLM-L6-v2</code>
     </div>
     """, unsafe_allow_html=True)
+    if selected == "🏠 Dashboard":
 
-elif selected == "⚙️ Settings":
-
-    st.subheader("⚙️ Settings")
+    st.subheader("🏠 Dashboard")
 
     st.markdown("""
     <div class="card">
-    <h3>Application Settings</h3>
+    <h3>Welcome</h3>
+    <p>
+    This AI Research Assistant helps you upload papers,
+    perform semantic search, generate embeddings,
+    and chat with research documents.
+    </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    <p>Theme: Dark Neon</p>
+    if uploaded_files:
 
-    <p>LLM Provider: Groq</p>
+        st.success(f"{len(uploaded_files)} document(s) loaded successfully.")
 
-    <p>Vector Database: FAISS</p>
+        for file in uploaded_files:
 
-    <p>Status: Operational</p>
+            st.write("📄", file.name)
 
+    else:
+
+        st.info("Upload research papers to begin.")
+
+elif selected == "📄 Upload Papers":
+
+    st.subheader("📄 Upload Papers")
+
+    if uploaded_files:
+
+        st.success(f"{len(uploaded_files)} PDF(s) uploaded")
+
+        for file in uploaded_files:
+
+            st.markdown(f"""
+            <div class="card">
+            <h4>📄 {file.name}</h4>
+            </div>
+            """, unsafe_allow_html=True)
+
+    else:
+
+        st.warning("No PDFs uploaded yet.")
+
+elif selected == "🔍 Semantic Search":
+
+    st.subheader("🔍 Semantic Search")
+
+    if chunks:
+
+        st.write(f"Total Chunks Created: {len(chunks)}")
+
+        for i, chunk in enumerate(chunks[:5]):
+
+            st.markdown(f"""
+            <div class="card">
+            <h4>Chunk {i+1}</h4>
+            <p>{chunk[:400]}...</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    else:
+
+        st.info("Upload PDFs first.")
+
+elif selected == "🤖 AI Assistant":
+
+    st.subheader("🤖 AI Assistant")
+
+    if st.session_state.vector_store:
+
+        question = st.chat_input(
+            "Ask anything about your uploaded papers..."
+        )
+
+        if question:
+
+            with st.chat_message("user"):
+                st.write(question)
+
+            docs = st.session_state.vector_store.similarity_search(
+                question,
+                k=3
+            )
+
+            context = "\n\n".join(
+                [doc.page_content for doc in docs]
+            )
+
+            llm = ChatGroq(
+                groq_api_key=os.getenv("GROQ_API_KEY"),
+                model_name="llama3-8b-8192",
+                temperature=0
+            )
+
+            prompt = f"""
+You are an AI Research Assistant.
+
+Use ONLY the provided context.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:
+"""
+
+            answer = llm.invoke(prompt).content
+
+            with st.chat_message("assistant"):
+                st.write(answer)
+
+    else:
+
+        st.info("Upload PDFs first.")
+
+elif selected == "📚 Vector Database":
+
+    st.subheader("📚 Vector Database")
+
+    st.markdown(f"""
+    <div class="card">
+    <h3>FAISS Vector Store</h3>
+    <p>Total Chunks: {chunk_count}</p>
+    <p>Embedding Model:</p>
+    <code>sentence-transformers/all-MiniLM-L6-v2</code>
     </div>
     """, unsafe_allow_html=True)
