@@ -156,7 +156,8 @@ with col3:
 
 with col4:
     st.metric("🤖 AI", "Online")
-    if selected == "🏠 Dashboard":
+
+if selected == "🏠 Dashboard":
 
     st.subheader("🏠 Dashboard")
 
