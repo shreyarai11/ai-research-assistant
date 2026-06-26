@@ -191,29 +191,29 @@ with col4:
         <h2>{status}</h2>
     </div>
     """, unsafe_allow_html=True)
-    if selected == "🏠 Dashboard":
+if selected == "🏠 Dashboard":
 
-       st.header("🏠 Dashboard")
+    st.header("🏠 Dashboard")
 
-       st.markdown("""
-      <div class="card">
+    st.markdown("""
+    <div class="card">
 
-     <h2>Welcome to AI Research Assistant Pro</h2>
+    <h2>Welcome to AI Research Assistant Pro</h2>
 
-     <p>
-     Upload one or more research papers.
-     Build embeddings automatically.
-     Search semantically.
-     Chat with your papers using AI.
-     Generate summaries.
-     Compare papers.
-     Export conversations.
-     </p>
+    <p>
+    Upload one or more research papers.
+    Build embeddings automatically.
+    Search semantically.
+    Chat with your papers using AI.
+    Generate summaries.
+    Compare papers.
+    Export conversations.
+    </p>
 
-     </div>
-     """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
-    if doc_count == 0:
+        if doc_count == 0:
 
         st.info("Upload research papers to begin.")
 
