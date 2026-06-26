@@ -187,16 +187,12 @@ with col4:
 
     st.markdown(f"""
     <div class="metric-card">
-        <h3>🤖 AI</h3>
-        <h2>{status}</h2>
-    </div>
-    """, unsafe_allow_html=True)
 if selected == "🏠 Dashboard":
 
     st.header("🏠 Dashboard")
 
     st.markdown("""
-    ...
+    <!-- Your existing dashboard HTML goes here -->
     """, unsafe_allow_html=True)
 
     if doc_count == 0:
@@ -208,11 +204,27 @@ if selected == "🏠 Dashboard":
 
         for file in uploaded_files:
             st.write("📄", file.name)
- elif selected == "📄 Upload Papers":
+
+elif selected == "📄 Upload Papers":
 
     st.header("📄 Upload Research Papers")
 
     if doc_count == 0:
+        st.info("Upload one or more PDF research papers using the uploader above.")
+    else:
+        st.success(f"{doc_count} paper(s) uploaded successfully.")
+
+        st.markdown("## 📚 Uploaded Papers")
+
+        for i, file in enumerate(uploaded_files):
+            size = round(file.size / 1024, 2)
+
+            st.markdown(f"""
+            <div class="card">
+                <h4>📄 {file.name}</h4>
+                <p>Size: {size} KB</p>
+            </div>
+            """, unsafe_allow_html=True)
 
         st.info("Upload one or more PDF research papers using the uploader above.")
 
