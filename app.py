@@ -230,7 +230,7 @@ if selected == "🏠 Dashboard":
 
     st.header("📄 Upload Research Papers")
 
-    if doc_count == 0:
+       if doc_count == 0:
 
         st.info("Upload one or more PDF research papers using the uploader above.")
 
