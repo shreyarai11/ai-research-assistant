@@ -196,41 +196,23 @@ if selected == "🏠 Dashboard":
     st.header("🏠 Dashboard")
 
     st.markdown("""
-    <div class="card">
-
-    <h2>Welcome to AI Research Assistant Pro</h2>
-
-    <p>
-    Upload one or more research papers.
-    Build embeddings automatically.
-    Search semantically.
-    Chat with your papers using AI.
-    Generate summaries.
-    Compare papers.
-    Export conversations.
-    </p>
-
-    </div>
+    ...
     """, unsafe_allow_html=True)
 
-          if doc_count == 0:
-
-          st.info("Upload research papers to begin.")
-
-          else:
-
+    if doc_count == 0:
+        st.info("Upload research papers to begin.")
+    else:
         st.success(f"{doc_count} research paper(s) loaded.")
 
         st.subheader("Uploaded Papers")
 
         for file in uploaded_files:
-
             st.write("📄", file.name)
  elif selected == "📄 Upload Papers":
 
     st.header("📄 Upload Research Papers")
 
-       if doc_count == 0:
+    if doc_count == 0:
 
         st.info("Upload one or more PDF research papers using the uploader above.")
 
