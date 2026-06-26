@@ -226,7 +226,7 @@ with col4:
         for file in uploaded_files:
 
             st.write("📄", file.name)
-            elif selected == "📄 Upload Papers":
+ elif selected == "📄 Upload Papers":
 
     st.header("📄 Upload Research Papers")
 
