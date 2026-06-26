@@ -1000,15 +1000,10 @@ Shreya Rai
     if st.button("🗑 Reset Entire Workspace"):
 
         st.session_state.uploaded_files = []
-
         st.session_state.paper_text = ""
-
         st.session_state.chunks = []
-
         st.session_state.vector_store = None
-
         st.session_state.chat_history = []
-
         st.session_state.total_questions = 0
 
         if "summary" in st.session_state:
@@ -1018,23 +1013,22 @@ Shreya Rai
             del st.session_state.comparison
 
         st.success("Workspace reset successfully.")
-
         st.rerun()
-            st.markdown("---")
+
+    st.markdown("---")
 
     st.subheader("Current Workspace")
 
     st.write(f"📄 Uploaded Papers : {doc_count}")
-
     st.write(f"🧠 Chunks : {chunk_count}")
-
     st.write(f"💬 Questions : {question_count}")
 
     st.write(
         "🤖 AI Status : "
         + ("🟢 Online" if vector_store else "🔴 Offline")
     )
-        st.markdown("---")
+
+    st.markdown("---")
 
     st.subheader("Libraries Used")
 
@@ -1050,6 +1044,7 @@ python-dotenv
 torch
 transformers
 """)
+
     st.markdown("---")
 
     st.success("🚀 AI Research Assistant Pro is running successfully.")
