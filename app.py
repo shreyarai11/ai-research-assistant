@@ -703,21 +703,21 @@ Answer:
         st.info("""
 AI Research Assistant Pro
 
-• Multiple PDF Processing
+Multiple PDF Processing
 
-• Retrieval-Augmented Generation (RAG)
+Retrieval-Augmented Generation (RAG)
 
-• HuggingFace Embeddings
+HuggingFace Embeddings
 
-• FAISS Vector Search
+FAISS Vector Search
 
-• Groq Llama 3
+Groq Llama 3
 
-• Semantic Search
+Semantic Search
 
-• AI Question Answering
+AI Question Answering
 
-• Analytics Dashboard
+Analytics Dashboard
 """)
 elif selected == "📑 AI Summary":
 
