@@ -241,7 +241,7 @@ elif selected == "📄 Upload Papers":
             st.markdown(f"""
             <div class="card">
 
-            <h3>📄 {file.name}</h3>
+            <h3> {file.name}</h3>
 
             <p><b>Paper:</b> {i+1}</p>
 
