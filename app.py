@@ -982,7 +982,7 @@ Vector Database :
 FAISS
 
 LLM :
-Llama 3 8B (Groq)
+model = "Llama 3 8B (Groq)"
 
 Language :
 Python
