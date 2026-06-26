@@ -213,11 +213,11 @@ if selected == "🏠 Dashboard":
     </div>
     """, unsafe_allow_html=True)
 
-        if doc_count == 0:
+          if doc_count == 0:
 
-        st.info("Upload research papers to begin.")
+          st.info("Upload research papers to begin.")
 
-    else:
+          else:
 
         st.success(f"{doc_count} research paper(s) loaded.")
 
